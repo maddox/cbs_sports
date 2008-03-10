@@ -13,5 +13,14 @@ class BasketballGame
   def started?
     self.started
   end
+
+  def current?
+    (self.started? && !self.completed?)
+  end
+  
+  def upcoming?
+    (!self.started? && !self.completed?)
+  end
+  
   
 end

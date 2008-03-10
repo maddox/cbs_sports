@@ -12,41 +12,29 @@ class CbsScores
       mens_basketball_doc.search("//span[@id*='board']").each do |game_html|
         games << parse_basketball_game(game_html)
       end
-      
     end
 
   end
   
   
-  def completed_games
-    completed_games = []
-
-    self.games.each do |game|
-      completed_games << game if game.completed?
+  def method_missing(method, *args, &block)
+    if method.to_s =~ /(\w+)_games/
+      self.find_games_via_state($1)
+    else
+      super
     end
-
-    completed_games
   end
-
-  def current_games
-    current_games = []
-
+    
+  
+  def find_games_via_state(state)
+    found_games = []
     self.games.each do |game|
-      current_games << game if (!game.completed? && game.started?)
+      found_games << game if game.send(state + '?')
     end
-
-    current_games
+    found_games
   end
+  
 
-  def next_games
-    next_games = []
-
-    self.games.each do |game|
-      next_games << game if (!game.completed? && !game.started?)
-    end
-
-    next_games
-  end
 
 
   def parse_basketball_game(game_html)

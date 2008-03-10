@@ -6,6 +6,7 @@ scores = CbsScores.new(:mens_basketball)
 
 
 
+
 scores.completed_games.each do |game|
   puts game.inspect
 end
@@ -20,7 +21,7 @@ end
 puts
 puts
 
-scores.next_games.each do |game|
+scores.upcoming_games.each do |game|
   puts game.inspect
 end
 
