@@ -2,25 +2,25 @@ require 'cbs_scores'
 
 
 
-scores = CbsScores.new
+scores = CbsScores.new(:mens_basketball)
 
 
 
-scores.find_completed_games.each do |game|
+scores.completed_games.each do |game|
   puts game.inspect
 end
 
 puts
 puts
 
-scores.find_current_games.each do |game|
+scores.current_games.each do |game|
   puts game.inspect
 end
 
 puts
 puts
 
-scores.find_next_games.each do |game|
+scores.next_games.each do |game|
   puts game.inspect
 end
 

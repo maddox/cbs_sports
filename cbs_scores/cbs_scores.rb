@@ -3,17 +3,22 @@ class CbsScores
 
   MENS_BASKETBALL_URL = "http://www.sportsline.com/collegebasketball/scoreboard"
   
-  def initialize
+  def initialize(sport)
     self.games = []
-    mens_basketball_doc = Hpricot(open(MENS_BASKETBALL_URL, 'User-Agent' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)' ))
 
-    mens_basketball_doc.search("//span[@id*='board']").each do |game_html|
-      games << parse_basketball_game(game_html)
+    case sport
+    when :mens_basketball
+      mens_basketball_doc = Hpricot(open(MENS_BASKETBALL_URL, 'User-Agent' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)' ))
+      mens_basketball_doc.search("//span[@id*='board']").each do |game_html|
+        games << parse_basketball_game(game_html)
+      end
+      
     end
 
   end
-
-  def find_completed_games
+  
+  
+  def completed_games
     completed_games = []
 
     self.games.each do |game|
@@ -23,7 +28,7 @@ class CbsScores
     completed_games
   end
 
-  def find_current_games
+  def current_games
     current_games = []
 
     self.games.each do |game|
@@ -33,7 +38,7 @@ class CbsScores
     current_games
   end
 
-  def find_next_games
+  def next_games
     next_games = []
 
     self.games.each do |game|
