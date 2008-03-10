@@ -37,6 +37,8 @@ class CbsScores
 
 
 
+  private
+
   def parse_basketball_game(game_html)
     game = BasketballGame.new
 
