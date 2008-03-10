@@ -1,0 +1,28 @@
+##### CBS Scores
+
+This is a simple library that will collect sports scores from CBS for you to use.
+
+Right now it only works for men's college basketball, for obvious reasons. The NCAA tournament is around the corner, and I'm confident that we STILL won't get any kind of friendly mobile support for scores. So I made this to make something else. 
+
+Maybe you could use it to make something even cooler?
+
+It's pretty easy to use, just pass in the sport you want scores for.
+
+
+scores = CbsScores.new(:mens_basketball) # only works for mens college basketball for now!
+
+scores.games => Array # of games
+
+game = scores.games.first
+
+game.team1[:name] => "Va. Commonwealth"
+game.team1[:score] => 54
+game.team2[:name] => "George Mason"
+game.team2[:score] => 44
+
+game.time_left => => "19:45 left in 2nd"
+
+
+scores.completed_games => Array # of games that are Final
+scores.current_games => Array # of games that are still in play
+scores.upcoming_games => Array # of games that haven't started yet
