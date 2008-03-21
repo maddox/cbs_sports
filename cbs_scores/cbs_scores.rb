@@ -55,6 +55,10 @@ class CbsScores
       game.started = false
       game.completed = false
       game.time_left = Time.at($1.to_i).strftime('%I:%M %p %Z')
+    when /Postponed/
+      game.started = false
+      game.completed = false
+      game.time_left = 'Postponed'
     end
 
     game.team1[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td b").inner_html
