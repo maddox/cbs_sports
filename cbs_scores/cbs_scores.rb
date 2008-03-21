@@ -58,7 +58,9 @@ class CbsScores
     end
 
     game.team1[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td b").inner_html
+    game.team1[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td font").inner_html
     game.team2[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td b").inner_html
+    game.team2[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html
 
     if game.started?
       game.team1[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td:last b").inner_html
