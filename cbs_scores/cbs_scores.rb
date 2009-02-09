@@ -1,7 +1,7 @@
 class CbsScores
   attr_accessor :games
 
-  MENS_BASKETBALL_URL = "http://www.sportsline.com/collegebasketball/scoreboard"
+  MENS_BASKETBALL_URL = "http://www.cbssports.com/collegebasketball/scoreboard"
   
   def initialize(sport)
     self.games = []
@@ -62,9 +62,16 @@ class CbsScores
     end
 
     game.team1[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td b").inner_html
-    game.team1[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td font").inner_html
     game.team2[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td b").inner_html
-    game.team2[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html
+    begin
+      game.team1[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td font").inner_html
+      game.team2[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html
+    rescue Exception => e
+      puts "Team is not ranked. It must not be Tournament time yet"
+      game.team1[:rank] = nil
+      game.team2[:rank] = nil
+    end
+    
 
     if game.started?
       game.team1[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td:last b").inner_html
