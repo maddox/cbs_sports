@@ -1,19 +1,21 @@
 require 'cbs_scores'
+require 'json'
+require 'aws/s3'
 
 
 
-cbs_scores = CbsScores.new(:nascar_cup)
+scores = CbsScores.new(:mens_basketball)
 
-puts cbs_scores.race.drivers.inspect
+# puts cbs_scores.race.drivers.inspect
 
 
 # scores.completed_games.each do |game|
 #   puts game.inspect
 # end
-# 
-# puts
-# puts
-# 
+
+puts
+puts
+
 # scores.current_games.each do |game|
 #   puts game.inspect
 # end
@@ -24,4 +26,4 @@ puts cbs_scores.race.drivers.inspect
 # scores.upcoming_games.each do |game|
 #   puts game.inspect
 # end
-# 
+

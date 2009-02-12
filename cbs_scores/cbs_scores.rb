@@ -90,7 +90,7 @@ class CbsScores
     when /(\d\d\d\d\d\d\d\d+)/
       game.started = false
       game.completed = false
-      game.time_left = Time.at($1.to_i).strftime('%I:%M %p %Z')
+      game.time_left = Time.at($1.to_i).strftime('%l:%M %p %Z')
     when /Postponed/
       game.started = false
       game.completed = false
@@ -100,14 +100,16 @@ class CbsScores
     game.team1[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td b").inner_html
     game.team2[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td b").inner_html
     begin
-      game.team1[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td font").inner_html
-      game.team2[:rank] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html
+      game.team1[:seed] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td font").inner_html.gsub('#','')
     rescue Exception => e
-      puts "Team is not ranked. It must not be Tournament time yet"
-      game.team1[:rank] = nil
-      game.team2[:rank] = nil
+      game.team1[:seed] = nil
     end
-    
+
+    begin
+      game.team2[:seed] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html.gsub('#','')
+    rescue Exception => e
+      game.team2[:seed] = nil
+    end
 
     if game.started?
       game.team1[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td:last b").inner_html
