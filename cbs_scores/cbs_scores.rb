@@ -112,8 +112,8 @@ class CbsScores
     end
 
     if game.started?
-      game.team1[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td:last b").inner_html
-      game.team2[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td:last b").inner_html
+      game.team1[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td:last b").inner_html.gsub('&laquo', '')
+      game.team2[:score] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td:last b").inner_html.gsub('&laquo', '')
     end
 
     game
