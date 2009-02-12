@@ -101,12 +101,14 @@ class CbsScores
     game.team2[:name] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td b").inner_html
     begin
       game.team1[:seed] = Hpricot(game_html.to_s).at("//span div table tr:nth(1) td font").inner_html.gsub('#','').gsub('&laquo', '')
+      game.team1[:seed] = nil if game.team1[:seed] == "&laquo"
     rescue Exception => e
       game.team1[:seed] = nil
     end
 
     begin
-      game.team2[:seed] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html.gsub('#','').gsub('&laquo', '')
+      game.team2[:seed] = Hpricot(game_html.to_s).at("//span div table tr:nth(2) td font").inner_html.gsub('#','')
+      game.team2[:seed] = nil if game.team2[:seed] == "&laquo"
     rescue Exception => e
       game.team2[:seed] = nil
     end
